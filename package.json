@@ -1,7 +1,7 @@
 {
-  "name": "exempel2live-mongoose-docker",
+  "name": "projet_api_qmm-mongoose-docker",
   "version": "1.0.0",
-  "description": "Ce projet est une projet de démonstration pour apprendre à créer une api statique avec Express.",
+  "description": "Ce projet est une Api d'un site de commande en ligne par QMM",
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts --legacy-watch",
@@ -11,7 +11,12 @@
     "type": "git",
     "url": "exemple2live"
   },
-  "author": "Quentin Mauffet",
+  "authors": {
+    "dev1":"Quentin Piscione",
+    "dev2":"Mohammed Sahli",
+    "dev3":"Mohamed L"
+},
+
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,7 +24,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5"
+    "mongoose": "^8.9.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -28,7 +33,7 @@
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.8",
-    "@types/node": "^22.12.0",
+    "@types/node": "^22.13.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3"
   }
