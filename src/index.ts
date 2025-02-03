@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import authRoutes from "./routes/authRoutes";
 
 
-
+//coomm
 const app = express();
 dotenv.config();
 console.log(process.env.MONGO_URI);
