@@ -3,7 +3,6 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
     name: string;
-    email: string;
     hashedPassword: string;
     addedAt: Date;
 }
@@ -11,7 +10,6 @@ export interface IUser extends Document {
 // Définir le schéma Mongoose
 const UserSchema: Schema = new Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
     hashedPassword: { type: String, required: true },
     addedAt: { type: Date, default: Date.now } // Date d'ajout par défaut à l'instant présent
 });

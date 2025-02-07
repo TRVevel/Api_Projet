@@ -14,10 +14,8 @@ import ProductSchema, { IProduct } from "../DBSchemas/ProductSchema";
    export async function createProduct(req: Request, res: Response) {
     try {
      const { name, description, price, stock } = await req.body;
-     const user = req.headers.user ? JSON.parse(req.headers.user as string) : null;
-     const userId = user.id;
 
-    if (!name ||!description || !userId) {
+    if (!name ||!description || !price || !stock) {
        res.status(400).json({ message: 'Tous les champs sont requis : name, description, price, stock', name, description, price, stock});
     return;
     }
@@ -41,7 +39,7 @@ import ProductSchema, { IProduct } from "../DBSchemas/ProductSchema";
 export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { name, description, isPublic, songlist } = req.body;
+    const { name, description, price, stock } = req.body;
     
     if (!id) {
       res.status(400).send("Invalid ID");
@@ -55,7 +53,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
 
     const updatedProduct = await ProductSchema.findByIdAndUpdate(
       id,
-      { name, description, isPublic, songlist },
+      { name, description, price, stock },
       { new: true }
     ).exec();
 

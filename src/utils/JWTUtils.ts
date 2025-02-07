@@ -6,7 +6,7 @@ export function generateToken(payload:JwtPayload):string{
     if(SECRET_KEY===undefined){
         throw new Error('JWT_KEY is not defined');
     }
-    return jwt.sign(payload,SECRET_KEY as string,{expiresIn:'1h'});
+    return jwt.sign(payload,SECRET_KEY as string,{expiresIn:'12h'});
 }
 export function verifyToken(token:string):string | JwtPayload | null{
     if(SECRET_KEY===undefined){

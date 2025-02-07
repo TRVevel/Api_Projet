@@ -6,6 +6,7 @@ export interface IProduct extends Document {
     description: string;
     price: number;
     stock: number;
+    addedAt: Date;
 }
 
 // Définir le schéma Mongoose
@@ -13,7 +14,8 @@ const ProductSchema: Schema = new Schema({
     name: { type: String, required: true, unique:true },
     description: { type: String, required: true},
     price: { type: Number, required: true },
-    stock: { type: Number, required:true} // Date d'ajout par défaut à l'instant présent
+    stock: { type: Number, required:true}, // Date d'ajout par défaut à l'instant présent
+    addedAt: { type: Date, default: Date.now } // Date d'ajout par défaut à l'instant présent
 });
 
 // Exporter le modèle

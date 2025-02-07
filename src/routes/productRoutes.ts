@@ -4,8 +4,9 @@ import { verifyTokenMiddleware } from "../middlewares/verifyTokenMiddleware";
 
    const router = Router();
 
-   router.get('/products/all', verifyTokenMiddleware, getAllProducts);
+   router.get('/products', verifyTokenMiddleware, getAllProducts);
    router.post('/products',verifyTokenMiddleware, createProduct);
    router.put('/products/:id',verifyTokenMiddleware, updateProduct);
+   
    
    export default router;
