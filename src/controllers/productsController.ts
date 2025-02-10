@@ -10,10 +10,10 @@ export async function createProduct(req:Request, res:Response){
         return 
     }
 
-    //création d'un nouvel utilisateur
+    //création d'un nouveau produit
     const newProduct:ProductI= new ProductsSchema({name,description, prixUnitaire, stock});
     
-    //sauvegarde de l'utilisateur créé
+    //sauvegarde du produit créé
     const savedProduct= await newProduct.save();
 
     res.status(201).json({message: 'Produit créé avec succès',data: savedProduct});

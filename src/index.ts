@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
 import customerRoutes from './routes/customerRoutes';
+import orderRoutes from './routes/orderRoutes';
+import dashboardRoutes from './routes/dashboardRoutes';
 
 
 //Création d'un serveur Express
@@ -35,6 +37,8 @@ const connectDB = async () => {
 app.use('/a', authRoutes);
 app.use('/p', productRoutes); 
 app.use('/c', customerRoutes);
+app.use('/o', orderRoutes);
+app.use('/d', dashboardRoutes);
 
 
 //app.listen indique au serveur d'écouter les requêtes HTTP arrivant sur le port indiqué
