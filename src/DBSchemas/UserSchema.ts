@@ -4,6 +4,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IUser extends Document {
     name: string;
     hashedPassword: string;
+    role: string;
     addedAt: Date;
 }
 
@@ -11,6 +12,7 @@ export interface IUser extends Document {
 const UserSchema: Schema = new Schema({
     name: { type: String, required: true },
     hashedPassword: { type: String, required: true },
+    role: { type: String, enum: ['admin', 'user'], required: true, default: 'user' }, // rôle par défaut: utilisateur
     addedAt: { type: Date, default: Date.now } // Date d'ajout par défaut à l'instant présent
 });
 

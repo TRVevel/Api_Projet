@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { hashPassword, verifyPassword } from '../utils/pwdUtils';
-import UserSchema, { UserI } from '../DBSchemas/UsersSchema';
+import UserSchema, { IUser } from '../DBSchemas/UserSchema';
 import { generateToken } from '../utils/JWTUtils';
 
 //Création d'un utilisateur
@@ -15,7 +15,7 @@ export async function register(req:Request, res:Response){
     const hashedPassword= await hashPassword(password);
 
     //creer nouvel utilisateur
-    const newUser:UserI= new UserSchema({name,hashedPassword});
+    const newUser:IUser= new UserSchema({name,hashedPassword});
     //on sauvegarde
     const savedUser= await newUser.save();
 
