@@ -1,20 +1,21 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { hashPassword, verifyPassword } from '../utils/pwdUtils';
-import UserSchema, { IUser } from '../DBSchemas/UserSchema';
+import UserSchema, { UserI } from '../DBSchemas/UsersSchema';
 import { generateToken } from '../utils/JWTUtils';
 
+//Création d'un utilisateur
 export async function register(req:Request, res:Response){
     try{
-    const {name,password} = req.body;
-    if(!name || !password){
-        res.status(400).send('Champs manquant: name ou password');
+    const { name, password } = req.body;
+    if(!name || !password ){
+        res.status(400).send('ATTENTION : les champs "name" et "password" sont obligatoires !');
         return 
     }
     //hashage
     const hashedPassword= await hashPassword(password);
 
     //creer nouvel utilisateur
-    const newUser:IUser= new UserSchema({name,hashedPassword});
+    const newUser:UserI= new UserSchema({name,hashedPassword});
     //on sauvegarde
     const savedUser= await newUser.save();
 
@@ -25,14 +26,15 @@ export async function register(req:Request, res:Response){
 } catch(err:any){
     //erreur de duplication 
     if(err.code===11000){
-        res.status(400).json({message: 'Cet Email est déjà utilisé'});
+        res.status(400).json({message: 'Cet utilisateur existe déjà !'});
         return 
     }
     res.status(500).json({message: 'Erreur interne', error: err.message});
 
-}
+    }
 }
 
+//Connexion d'un utilisateur
 export async function login(req:Request, res:Response){
     const {name,password}=req.body;
     try{
@@ -53,5 +55,28 @@ export async function login(req:Request, res:Response){
 
     }catch(error:any){
         res.status(500).json({message: error.message});
+    }
+}
+
+//Modification du rôle d'un utilisateur
+export async function updateUserRole(req: Request, res: Response)  {
+    try {
+        const { name, newRole } = req.body;
+        if (!name || !newRole) {
+            res.status(400).json({ message: 'Les champs name et newRole sont obligatoires !' });
+            return;
+        }
+        
+        const user = await UserSchema.findOne({ name });
+        if (!user) {
+            res.status(404).json({ message: 'Utilisateur non trouvé !' });
+            return;
+        }
+        user.role = newRole;
+        await user.save();
+        
+        res.status(200).json({ message: "Rôle de l'utilisateur mis à jour avec succès !", data: user });
+    } catch (error: any) {
+        res.status(500).json({ message: 'Erreur interne', error: error.message });
     }
 }
