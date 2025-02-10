@@ -33,3 +33,7 @@ docker-compose up --build
 
 docker system prune -a  
 # Supprime tous les conteneurs, images et volumes inutilisés pour libérer de l'espace disque.
+
+npm install swagger-ui swagger-jsdoc swagger-ui-express
+npm install --save-dev @types/swagger-ui-express @types/swagger-jsdoc
+#Si documentation avec swagger

@@ -146,33 +146,31 @@ export const cancelOrder = async (req: Request, res: Response): Promise<void> =>
   export const modifyOrderStatus = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      const { status} = req.params;
       
       if (!id) {
         res.status(400).send("Invalid ID");
         return;
       }
       const order = await OrderSchema.findById(id).exec();
-      
       if (!order) {
         res.status(404).send("Order pas trouver");
         return;
       }
-      if (order.status === status) {
-          res.status(400).json({ message: `La commande est déjà : ${order.status}` });
-          return;
+        if(order.status ==='cancelled'){
+            res.status(400).json({ message: `Impossible la commande est : ${order.status}` });
+            return;
+        }else if(order.status ==='delivered'){
+            res.status(400).json({ message: `La commande est déjà : ${order.status}` });
+            return;
+        }else if(order.status ==='shipped'){
+            order.status = Status.delivered;
+        }else if(order.status ==='pending'){
+            order.status = Status.shipped;
         }
-  
-        const productsToUpdate: IProduct[] = [];
-  
         
-        order.status = Status[status as keyof typeof Status];
         order.modifiedAt = new Date();
         await order.save();
-        await Promise.all(productsToUpdate.map((product) => product.save()));
   
-        
-    
         res.status(201).json({ message: 'Commande annulée avec succès', data: order });
       } catch (err) {
         res.status(500).send("Une erreur est survenue lors de la modification de la commande");
