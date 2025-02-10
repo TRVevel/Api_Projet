@@ -9,14 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "exemple2live"
+    "url": "Api_Projet_QMM"
   },
   "authors": {
-    "dev1":"Quentin Piscione",
-    "dev2":"Mohammed Sahli",
-    "dev3":"Mohamed L"
-},
-
+    "dev1": "Quentin Piscione",
+    "dev2": "Mohammed Sahli",
+    "dev3": "Mohamed L"
+  },
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -5,8 +5,8 @@ import { generateToken } from '../utils/JWTUtils';
 
 export async function register(req:Request, res:Response){
     try{
-    const {name,email,password, isActive,age} = req.body;
-    if(!name ||!email|| !password){
+    const {name,password} = req.body;
+    if(!name || !password){
         res.status(400).send('Champs manquant: name ou password');
         return 
     }
@@ -14,7 +14,7 @@ export async function register(req:Request, res:Response){
     const hashedPassword= await hashPassword(password);
 
     //creer nouvel utilisateur
-    const newUser:IUser= new UserSchema({name,email,hashedPassword,isActive,age});
+    const newUser:IUser= new UserSchema({name,hashedPassword});
     //on sauvegarde
     const savedUser= await newUser.save();
 
@@ -34,9 +34,9 @@ export async function register(req:Request, res:Response){
 }
 
 export async function login(req:Request, res:Response){
-    const {email,password}=req.body;
+    const {name,password}=req.body;
     try{
-         const user= await  UserSchema.findOne({email});
+         const user= await  UserSchema.findOne({name});
             if(!user){
                 res.status(404).json({message: 'Utilisateur non trouvé'});
                 return 
@@ -47,7 +47,7 @@ export async function login(req:Request, res:Response){
                 res.status(401).json({message: 'Mot de passe incorrect'});
                 return 
             }
-            const token = generateToken({id:user._id,email:user.email});
+            const token = generateToken({id:user._id,name:user.name});
             res.cookie('jwt',token,{httpOnly:true, sameSite:'strict'});
             res.status(200).json({message: 'Connexion réussie'});
 

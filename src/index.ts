@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from "./routes/authRoutes";
+import productRoutes from "./routes/productRoutes";
+import customerRoutes from "./routes/customerRoutes";
+import orderRoutes from "./routes/orderRoutes";
 
 
 
@@ -25,6 +28,9 @@ const connectDB = async () => {
     connectDB();
 
     app.use('/api/auth', authRoutes);
+    app.use('/api', productRoutes);
+    app.use('/api', customerRoutes);
+    app.use('/api', orderRoutes);
 
 app.listen(3000, () => {
     console.log('Server is running on port :',PORT); 
