@@ -42,7 +42,7 @@ router.post('/CProduct', createProduct);
 
 /**
  * @swagger
- * /c/GProduct/{name}:
+ * /p/GProduct/{name}:
  *   get:
  *     summary: Consulter le détail d'un produit par son nom
  *     description: Retourne les détails d'un produit spécifique.
