@@ -70,7 +70,13 @@ export async function createOrder (req: Request, res: Response) {
         const savedOrder= await newOrder.save();
     
         const tva=totalCommande*(20/100);
-        res.status(201).json({ message: `Commande créée avec succès ! le total HT est de : ${parseFloat(totalCommande.toFixed(2))} €, TVA (20%) : ${parseFloat(tva.toFixed(2))} €, Total TTC :${parseFloat((totalCommande + tva).toFixed(2))} €`, data: savedOrder });
+        res.status(201).json({ 
+            message: "Commande créée avec succès ! " +
+            "Le total HT est de : " + parseFloat(totalCommande.toFixed(2)).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €" +
+            " TVA (20%) : " + parseFloat(tva.toFixed(2)).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €, Total TTC : " + 
+            parseFloat((totalCommande + tva).toFixed(2)).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €", 
+            data: savedOrder 
+        });
     } catch (err: any) {
         res.status(500).json({ message: 'Erreur interne', error: err.message });
     }
