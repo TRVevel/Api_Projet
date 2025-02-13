@@ -93,11 +93,12 @@ export async function listOrdersByCustomer(req: Request, res: Response) {
             res.status(404).json({ message: "ATTENTION : Ce client n'existe pas !" });
             return;
         }
+        const nom = customer.name;
 
         // Récupération des commandes du client
         const orders = await OrdersSchema.find({ customerId });
 
-        res.status(200).json({ message: "Historique des commandes récupéré avec succès !", data: orders });
+        res.status(200).json({ message: "le client Id = '" + customerId + "' nom = '" + nom + "' a passé " + orders.length + " commandes qui sont :", data: orders });
     } catch (err: any) {
         res.status(500).json({ message: "Erreur interne", error: err.message });
     }

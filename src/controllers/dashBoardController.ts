@@ -14,7 +14,7 @@ export async function stockByProduct(req: Request, res: Response) {
             return;
         }
 
-        res.status(200).json({ message: "Stocks des produits récupérés avec succès", data: products });
+        res.status(200).json({ message: "Les stock des produit est en couleur rouge ", data: products });
     } catch (err: any) {
         res.status(500).json({ message: "Erreur interne", error: err.message });
     }
@@ -35,7 +35,7 @@ export async function monthlyRevenue(req: Request, res: Response) {
         //    dans "lastDayOfMonth" on itiialise le dernier jour du mois à partir de "now"
         //    ici avec "+ 1", on passe au mois suivant. L'argument "0" représente le dernier jour du M-1
         const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
+        const month = new Date().toLocaleString("fr-FR", { month: "long" });
         // Récupérer les commandes du mois qui ne sont pas annulées
         const orders = await OrdersSchema.find({
 
@@ -63,7 +63,7 @@ export async function monthlyRevenue(req: Request, res: Response) {
         }
 
         res.status(200).json({ 
-            message: "Le C.A. H.T. du mois calculé avec succès d'un montant de : " 
+            message: "Le chiffre d'affaires H.T. du mois de " + month + " est de : " 
             + parseFloat(totalRevenue.toFixed(2)).toLocaleString('fr-FR', 
             { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €" 
             });

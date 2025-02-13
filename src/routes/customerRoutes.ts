@@ -44,7 +44,7 @@ router.post('/CCustomer', createCustomer);
 
 /**
  * @swagger
- * /c/UCustomer/{email}:
+ * /c/UCustomer/{id}:
  *   post:
  *     summary: Met à jour les informations d'un client
  *     description: Modifie les informations d'un client sans changer son statut actif.
@@ -52,7 +52,7 @@ router.post('/CCustomer', createCustomer);
  *       - Clients
  *     parameters:
  *       - in: path
- *         name: email
+ *         id: id
  *         required: true
  *         schema:
  *           type: string
@@ -81,7 +81,7 @@ router.post('/CCustomer', createCustomer);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post('/UCustomer/:email', updateCustomer);
+router.post('/UCustomer/:id', updateCustomer);
 
 /**
  * @swagger

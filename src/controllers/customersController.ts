@@ -30,12 +30,12 @@ export async function createCustomer(req:Request, res:Response){
 // Modification d'un client (sans modification du statut actif)
 export async function updateCustomer(req: Request, res: Response) {
     try {
-        const { email } = req.params;
-        const { name, address, phone, active, ...rest } = req.body; // Exclure `active`
+        const { id } = req.params;
+        const { name, email, address, phone, active, ...rest } = req.body; // Exclure `active`
 
         //Vérifier si l'email du client est passé en paramètre 
-        if (!email){
-            res.status(400).json({ message: "Aucun email n'est passé en paramètre !" });
+        if (!id){
+            res.status(400).json({ message: "Aucun id n'est passé en paramètre !" });
             return;
         }
 
@@ -47,8 +47,8 @@ export async function updateCustomer(req: Request, res: Response) {
 
         // Mise à jour des autres champs
         const updatedCustomer = await CustomersSchema.findOneAndUpdate(
-            { email },
-            { name, address, phone, ...rest },
+            { id },
+            { name, email, address, phone, ...rest },
             { new: true, runValidators: true }
         );
 
@@ -100,7 +100,8 @@ export async function updateStatusCustomer(req: Request, res: Response) {
 export async function getActiveCustomers(req: Request, res: Response) {
     try {
         const customers = await CustomersSchema.find({ active: true });
-        res.status(200).json(customers);
+        res.status(200).json({ message: "Les clients actifs sont au nombre de " + customers.length + " et sont : ",customers })
+        
     } catch (err: any) {
         res.status(500).json({ message: "Erreur interne", error: err.message });
     }

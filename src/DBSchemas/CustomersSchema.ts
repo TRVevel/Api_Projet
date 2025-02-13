@@ -6,7 +6,6 @@ export interface CustomerI extends Document {
     name: string;
     address: string;
     phone: string;
-    orders: string[];
     active: boolean;
 }
 // Définition du schéma Mongoose
@@ -15,7 +14,6 @@ const CustomerSchema: Schema = new Schema({
     name: { type: String, required: true },
     address: { type: String, required: true },
     phone: {type: String, required: true},
-    orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
     active: { type: Boolean, required: true, default: true }
 });
 

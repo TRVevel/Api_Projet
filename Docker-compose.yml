@@ -1,4 +1,4 @@
-services:
+ services:
   #Définition du premier container
   api:
     build: .
@@ -18,7 +18,7 @@ services:
     #Commande à lancer après l'installation du
     #container pour lancer l'app automatiquement
 
-    #Définition du second container
+  #Définition du second container
   mongodb:
     image: mongo:latest #utilisation d'une image prédéfinie sur docker hub
     container_name: mongodb-QMM # Définition du nom du container de la BDD
@@ -26,6 +26,6 @@ services:
       - "27017:27017" #exposition du port de la BDD hors-conteneur
     volumes:
       - mongodb-data:/data/db #volumes définit l'emplacement des données sauvegardées sur la machine hôte
-      
-volumes:
-  mongodb-data:
+
+ volumes:
+   mongodb-data:

@@ -70,7 +70,7 @@ export async function DeleteAProduct(req: Request, res: Response) {
 export async function getAllProducts(req: Request, res: Response) {
     try {
         const products = await ProductsSchema.find();
-        res.status(200).json({ message: 'Liste des produits récupérée avec succès', data: products });
+        res.status(200).json({ message: "La base de données contient " + products.length + " produits qui sont : ", data: products });
     } catch (error: any) {
         res.status(500).json({ message: 'Erreur interne', error: error.message });
     }
