@@ -117,12 +117,13 @@ router.put('/orders/:id', verifyTokenMiddleware, modifyOrderStatus);
  * @swagger
  * /api/orders/customer/{customerId}:
  *   get:
- *     summary: Récupérer toutes les commandes
- *     description: Retourne la liste de toutes les commandes.
+ *     summary: Récupérer toutes les commandes d'un client
+ *     description: Retourne la liste de toutes les commandes d'un client.
  *     parameters:
  *       - in: path
  *         name: customerId
  *         required: true
+ *         example: "67a32a811cca2b0308362f74"
  *     tags:
  *       - Orders
  *     security:
