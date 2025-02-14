@@ -7,8 +7,8 @@ export enum Status{
     cancelled='cancelled'
 }
 export interface IOrder extends Document {
-    customer: string;
-    productList: string[];
+    customerId: string;
+    productIdList: string[];
     unitPriceList: number[];
     ttPrice: number;
     quantityList: number[];
@@ -19,8 +19,8 @@ export interface IOrder extends Document {
 
 // Définir le schéma Mongoose
 const OrderSchema: Schema = new Schema({
-    customer: { type: String, required: true },
-    productList: { type: [String], required: true, default: [] },
+    customerId: { type: String, required: true },
+    productIdList: { type: [String], required: true, default: [] },
     unitPriceList: { type: [Number], required: true, default: [] },
     ttPrice: { type: Number, required: true },
     quantityList: { type: [Number], required:true}, // Date d'ajout par défaut à l'instant présent

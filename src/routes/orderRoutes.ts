@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllOrders, createOrder, cancelOrder, modifyOrderStatus } from "../controllers/orderControllers";
+import { getAllOrders, createOrder, cancelOrder, modifyOrderStatus, listOrdersByCustomer } from "../controllers/orderControllers";
 import { verifyTokenMiddleware } from "../middlewares/verifyTokenMiddleware";
 
 const router = Router();
@@ -113,5 +113,26 @@ router.put('/orders/cancel/:id', verifyTokenMiddleware, cancelOrder);
  *         description: Erreur interne.
  */
 router.put('/orders/:id', verifyTokenMiddleware, modifyOrderStatus);
+/**
+ * @swagger
+ * /api/orders/customer/{customerId}:
+ *   get:
+ *     summary: Récupérer toutes les commandes
+ *     description: Retourne la liste de toutes les commandes.
+ *     parameters:
+ *       - in: path
+ *         name: customerId
+ *         required: true
+ *     tags:
+ *       - Orders
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Liste des commandes récupérée avec succès.
+ *       500:
+ *         description: Erreur serveur.
+ */
+router.get('/orders/customer/:customerId', verifyTokenMiddleware, listOrdersByCustomer);
 
 export default router;

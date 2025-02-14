@@ -103,7 +103,7 @@ export const cancelOrder = async (req: Request, res: Response): Promise<void> =>
         res.status(400).json({ message: 'La commande est déjà annulée' });
         return;
       }
-      const customer = await CustomerSchema.findById(order.customer).exec();
+      const customer = await CustomerSchema.findById(order.customerId).exec();
       
       if (!customer) {
         res.status(404).send("Customer pas trouver");
@@ -112,11 +112,11 @@ export const cancelOrder = async (req: Request, res: Response): Promise<void> =>
 
       const productsToUpdate: IProduct[] = [];
 
-      for (let i = 0; i < order.productList.length; i++) {
-        const product = await ProductSchema.findById(order.productList[i]);
+      for (let i = 0; i < order.productIdList.length; i++) {
+        const product = await ProductSchema.findById(order.productIdList[i]);
   
         if (!product) {
-          res.status(404).json({ message: `Produit introuvable: ${order.productList[i]}` });
+          res.status(404).json({ message: `Produit introuvable: ${order.productIdList[i]}` });
           return;
         }
         
@@ -176,3 +176,25 @@ export const cancelOrder = async (req: Request, res: Response): Promise<void> =>
         res.status(500).send("Une erreur est survenue lors de la modification de la commande");
       }
     };
+
+    export async function listOrdersByCustomer(req: Request, res: Response) {
+      try {
+          const { customerId } = req.params;
+  
+          // Vérification de l'existence du client
+          const customer = await CustomerSchema.findById(customerId);
+          if (!customer) {
+              res.status(404).json({ message: "ATTENTION : Ce client n'existe pas !" });
+              return;
+          }
+  
+          // Récupération des commandes du client
+          const orders = await OrderSchema.find({ customerId });
+          console.log(orders)
+          
+  
+          res.status(200).json({ message: "le client Id = '" + customerId + "' nom = '" + customer.name + "' a passé " + orders.length + " commandes qui sont :", data: orders });
+      } catch (err: any) {
+          res.status(500).json({ message: "Erreur interne", error: err.message });
+      }
+  }
