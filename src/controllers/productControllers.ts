@@ -15,10 +15,28 @@ import ProductSchema, { IProduct } from "../DBSchemas/ProductSchema";
     try {
      const { name, description, price, stock } = await req.body;
 
-    if (!name ||!description || !price || !stock) {
-       res.status(400).json({ message: 'Tous les champs sont requis : name, description, price, stock', name, description, price, stock});
-    return;
-    }
+    const nameRegex = /^[a-zA-Z0-9\s\-_]+$/;
+        const descriptionRegex = /^.{10,}$/;
+        const priceRegex = /^(?!0(?:\.0+)?$)\d+(\.\d+)?$/;
+        const stockRegex = /^[1-9]\d*$/;
+    if (
+      !name || !nameRegex.test(name) ||
+      !description || !descriptionRegex.test(description) ||
+      !price || !priceRegex.test(price.toString()) ||
+      !stock || !stockRegex.test(stock.toString())
+  ) {
+      res.status(400).json({
+          message: "Tous les champs sont requis et doivent être valides :",
+          errors: {
+              name: "Le nom doit contenir uniquement des lettres, chiffres et - _",
+              description: "La description doit contenir au moins 10 caractères",
+              price: "Le prix doit être un nombre supérieur ou égal à 1",
+              stock: "Le stock doit être un entier supérieur ou égal à 1",
+          },
+      });
+      return;
+  }
+
     
     const newProduct: IProduct = new ProductSchema ({ name, description, price, stock});
     
@@ -50,7 +68,27 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
       res.status(404).send("Product pas trouver");
       return;
     }
-
+    const nameRegex = /^[a-zA-Z0-9\s\-_]+$/;
+    const descriptionRegex = /^.{10,}$/;
+    const priceRegex = /^(?!0(?:\.0+)?$)\d+(\.\d+)?$/;
+    const stockRegex = /^[0-9]\d*$/;
+    if (
+      (name && !nameRegex.test(name)) ||
+      (description && !descriptionRegex.test(description)) ||
+      (price && !priceRegex.test(price.toString())) ||
+      (stock !== undefined && !stockRegex.test(stock.toString()))
+    ) {
+      res.status(400).json({
+        message: "Certains champs sont invalides :",
+        errors: {
+          name: "Le nom doit contenir uniquement des lettres, chiffres et - _",
+          description: "La description doit contenir au moins 10 caractères",
+          price: "Le prix doit être un nombre supérieur ou égal à 1",
+          stock: "Le stock doit être un entier positif ou 0",
+        },
+      });
+      return;
+    }
     const updatedProduct = await ProductSchema.findByIdAndUpdate(
       id,
       { name, description, price, stock },

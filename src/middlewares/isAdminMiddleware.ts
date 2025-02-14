@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import UserSchema from '../DBSchemas/UsersSchema';
+import UserSchema from '../DBSchemas/UserSchema';
 
 export async function isAdminMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
 

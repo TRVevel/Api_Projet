@@ -5,6 +5,9 @@ import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import customerRoutes from "./routes/customerRoutes";
 import orderRoutes from "./routes/orderRoutes";
+import dashboardRoutes from './routes/dashboardRoutes';
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./config/swagger";
 
 
 
@@ -34,9 +37,11 @@ const connectDB = async () => {
    connectDB();
 
     app.use('/api/auth', authRoutes);
+    app.use('/api/home', dashboardRoutes);
     app.use('/api', productRoutes);
     app.use('/api', customerRoutes);
     app.use('/api', orderRoutes);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
 //app.listen indique au serveur d'écouter les requêtes HTTP arrivant sur le port indiqué

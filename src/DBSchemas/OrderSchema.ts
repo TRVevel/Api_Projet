@@ -14,7 +14,7 @@ export interface IOrder extends Document {
     quantityList: number[];
     status: Status;
     modifiedAt: Date;
-    addedAt: Date;
+    createdAt: Date;
 }
 
 // Définir le schéma Mongoose
@@ -26,7 +26,7 @@ const OrderSchema: Schema = new Schema({
     quantityList: { type: [Number], required:true}, // Date d'ajout par défaut à l'instant présent
     status: { type: String, enum:  Object.values(Status), required: true, default: Status.pending }, // en attente, expédiée, livrée, annulée(en attente par défaut)
     modifiedAt: { type: Date, default: Date.now }, // Date de modification par défaut à l'instant présent
-    addedAt: { type: Date, default: Date.now } // Date d'ajout par défaut à l'instant présent
+    createdAt: { type: Date, default: Date.now } // Date d'ajout par défaut à l'instant présent
 });
 
 // Exporter le modèle

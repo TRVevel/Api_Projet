@@ -18,7 +18,7 @@ export async function createOrder(req: Request, res: Response) {
         const { customer, productList, quantityList } = req.body;
 
         if (!customer || !productList || !quantityList) {
-            res.status(400).json({  message: 'Tous les champs sont requis : customer, productList, unitPriceList, quantityList' })
+            res.status(400).json({  message: 'Tous les champs sont requis : customer, productList, quantityList' })
             return;
         }
 

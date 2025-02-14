@@ -11,6 +11,19 @@ export async function register(req:Request, res:Response){
         res.status(400).send('ATTENTION : les champs "name" et "password" sont obligatoires !');
         return 
     }
+    const nameRegex= /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+    const passwordRegex= /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    
+  if (!nameRegex.test(name) ||!passwordRegex.test(password) ) {
+    if (!nameRegex.test(name)) {
+        res.status(400).json({ message: 'Nom invalide, il doit contenir que des lettres' });
+    }
+    if (!passwordRegex.test(password)) {
+      res.status(400).json({ message: 'Mdp invalide, il doit contenir que des lettres, des chiffres, des symboles et 8 caractères' });
+    }
+    return;
+  }
+    
     //hashage
     const hashedPassword= await hashPassword(password);
 
@@ -57,22 +70,33 @@ export async function login(req:Request, res:Response){
         res.status(500).json({message: error.message});
     }
 }
+export async function getAllUsers(req: Request, res: Response) {
+    try {
+        const users = await UserSchema.find();
+        res.status(200).json(users);
+    } catch (err: any) {
+        console.error('Erreur lors de la récupération des users : ', err)
+        res.status(500).json({ message: 'Erreur lors de la récupération des users' })
+        
+    }
+}
 
 //Modification du rôle d'un utilisateur
 export async function updateUserRole(req: Request, res: Response)  {
     try {
-        const { name, newRole } = req.body;
-        if (!name || !newRole) {
-            res.status(400).json({ message: 'Les champs name et newRole sont obligatoires !' });
+        const { id } = req.params;
+        const { role } = req.body;
+        if ( !role) {
+            res.status(400).json({ message: 'Les champs name et role sont obligatoires !' });
             return;
         }
         
-        const user = await UserSchema.findOne({ name });
+        const user = await UserSchema.findByIdAndUpdate(id).exec();
         if (!user) {
             res.status(404).json({ message: 'Utilisateur non trouvé !' });
             return;
         }
-        user.role = newRole;
+        user.role = role;
         await user.save();
         
         res.status(200).json({ message: "Rôle de l'utilisateur mis à jour avec succès !", data: user });
