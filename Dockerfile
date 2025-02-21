@@ -9,7 +9,7 @@ COPY . .
 
 # RUN est une instruction lancée au build de l'image.
 # Installer les dépendances (installation au sein du projet)
-RUN npm install
+RUN npm ci
 
 # Installer nodemon dans le conteneur (installation dans l'environnement de développement)
 RUN npm install -g nodemon

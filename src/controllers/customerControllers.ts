@@ -187,7 +187,7 @@ export const delOrderInHistory = async (req: Request, res: Response): Promise<vo
     try {
       const { id, idOrder } = req.params;
       const user = req.headers.user ? JSON.parse(req.headers.user as string) : null;
-      console.log("id customer",id,"id song",idOrder);
+      console.log("id customer",id,"id order",idOrder);
       if (!id) {
         res.status(400).send("Invalid ID");
         return;

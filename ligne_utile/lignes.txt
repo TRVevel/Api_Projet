@@ -28,12 +28,38 @@ npm install express bcryptjs jsonwebtoken cookie-parser
 npm i --save-dev @types/bcrypt @types/bcryptjs @types/jsonwebtoken @types/cookie-parser  
 # Installe les types TypeScript pour bcrypt, bcryptjs, jsonwebtoken et cookie-parser, utiles pour le développement en TypeScript.
 
+npm install swagger-ui swagger-jsdoc swagger-ui-express
+npm install --save-dev @types/swagger-ui-express @types/swagger-jsdoc
+#Si documentation avec swagger
+
+npm install cors
+npm i --save-dev @types/cors
+#Sécu cors pour requete api
+
+npm install joi
+#protection injection avec joi
+
+npm install express-mongo-sanitize
+#protection injection mongo sanitize
+
+npm install helmet
+#protection info headers
+
+npx npm-check-updates -u
+#verifier les versions des dépendances et les mettres a jour
+
+npm install express-rate-limit
+npm install --save-dev @types/express-rate-limit
+#limite requete login
+
+npm audit
+#Vérifie la fiabilité des dépendances
+
 docker-compose up --build  
 # Démarre les services définis dans le fichier `docker-compose.yml` en reconstruisant les images si nécessaire.
 
 docker system prune -a  
 # Supprime tous les conteneurs, images et volumes inutilisés pour libérer de l'espace disque.
 
-npm install swagger-ui swagger-jsdoc swagger-ui-express
-npm install --save-dev @types/swagger-ui-express @types/swagger-jsdoc
-#Si documentation avec swagger
+npx tsc
+#dist

@@ -17,6 +17,32 @@ const router = Router();
  *     responses:
  *       200:
  *         description: Liste des commandes récupérée avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: "60d21b4667d0d8992e610c85"
+ *                   customer:
+ *                     type: string
+ *                     example: "607c3f4d9c1e8a6b1f8b5d4f"
+ *                   productList:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                       example: "60d21b4667d0d8992e610c85"
+ *                   quantityList:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                       example: 2
+ *                   status:
+ *                     type: string
+ *                     example: "pending"
  *       500:
  *         description: Erreur serveur.
  */
@@ -53,6 +79,30 @@ router.get('/orders', verifyTokenMiddleware, getAllOrders);
  *     responses:
  *       201:
  *         description: Commande créée avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: "60d21b4667d0d8992e610c86"
+ *                 customer:
+ *                   type: string
+ *                   example: "607c3f4d9c1e8a6b1f8b5d4f"
+ *                 productList:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                     example: "60d21b4667d0d8992e610c85"
+ *                 quantityList:
+ *                   type: array
+ *                   items:
+ *                     type: integer
+ *                     example: 3
+ *                 status:
+ *                   type: string
+ *                   example: "pending"
  *       400:
  *         description: Requête invalide (produit introuvable, stock insuffisant, etc.).
  *       500:
@@ -78,6 +128,17 @@ router.post('/orders', verifyTokenMiddleware, createOrder);
  *     responses:
  *       200:
  *         description: Commande annulée avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: "60d21b4667d0d8992e610c85"
+ *                 status:
+ *                   type: string
+ *                   example: "cancelled"
  *       400:
  *         description: Commande déjà annulée ou problème avec la commande.
  *       404:
@@ -101,10 +162,22 @@ router.put('/orders/cancel/:id', verifyTokenMiddleware, cancelOrder);
  *         required: true
  *         schema:
  *           type: string
+ *           example: "67a32a811cca2b0308362f74"
  *         description: ID de la commande.
  *     responses:
  *       200:
  *         description: Statut de la commande modifié avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   example: "60d21b4667d0d8992e610c85"
+ *                 status:
+ *                   type: string
+ *                   example: "shipped"
  *       400:
  *         description: Statut de la commande déjà mis à jour (par exemple, "cancelled" ou "delivered").
  *       404:
@@ -113,6 +186,7 @@ router.put('/orders/cancel/:id', verifyTokenMiddleware, cancelOrder);
  *         description: Erreur interne.
  */
 router.put('/orders/:id', verifyTokenMiddleware, modifyOrderStatus);
+
 /**
  * @swagger
  * /api/orders/customer/{customerId}:
@@ -123,7 +197,10 @@ router.put('/orders/:id', verifyTokenMiddleware, modifyOrderStatus);
  *       - in: path
  *         name: customerId
  *         required: true
- *         example: "67a32a811cca2b0308362f74"
+ *         schema:
+ *           type: string
+ *           example: "67b84ded11bb8277e746b592"
+ *         description: ID du client pour lequel récupérer les commandes
  *     tags:
  *       - Orders
  *     security:
@@ -131,6 +208,32 @@ router.put('/orders/:id', verifyTokenMiddleware, modifyOrderStatus);
  *     responses:
  *       200:
  *         description: Liste des commandes récupérée avec succès.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: "60d21b4667d0d8992e610c85"
+ *                   customer:
+ *                     type: string
+ *                     example: "607c3f4d9c1e8a6b1f8b5d4f"
+ *                   productList:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                       example: "60d21b4667d0d8992e610c85"
+ *                   quantityList:
+ *                     type: array
+ *                     items:
+ *                       type: integer
+ *                       example: 2
+ *                   status:
+ *                     type: string
+ *                     example: "pending"
  *       500:
  *         description: Erreur serveur.
  */

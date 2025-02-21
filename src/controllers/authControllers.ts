@@ -2,6 +2,8 @@ import { Request, Response, Router } from 'express';
 import { hashPassword, verifyPassword } from '../utils/pwdUtils';
 import UserSchema, { IUser } from '../DBSchemas/UserSchema';
 import { generateToken } from '../utils/JWTUtils';
+import { validateSchema } from '../utils/joiUtils';
+import { loginSchema } from '../JoiValidators/authValidators';
 
 //Création d'un utilisateur
 export async function register(req:Request, res:Response){
@@ -49,7 +51,7 @@ export async function register(req:Request, res:Response){
 
 //Connexion d'un utilisateur
 export async function login(req:Request, res:Response){
-    const {name,password}=req.body;
+    const {name,password}=validateSchema(req,loginSchema);
     try{
          const user= await  UserSchema.findOne({name});
             if(!user){

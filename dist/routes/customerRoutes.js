@@ -1,18 +1,10 @@
-import { Router } from "express";
-import {
-  getAllCustomers,
-  createCustomer,
-  updateCustomer,
-  getActiveCustomer,
-  addOrderInHistory,
-  delOrderInHistory,
-  updateCustomerActivity,
-} from "../controllers/customerControllers";
-import { verifyTokenMiddleware } from "../middlewares/verifyTokenMiddleware";
-import { isAdminMiddleware } from "../middlewares/isAdminMiddleware";
-
-const router = Router();
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const customerControllers_1 = require("../controllers/customerControllers");
+const verifyTokenMiddleware_1 = require("../middlewares/verifyTokenMiddleware");
+const isAdminMiddleware_1 = require("../middlewares/isAdminMiddleware");
+const router = (0, express_1.Router)();
 /**
  * @swagger
  * /api/customers:
@@ -29,8 +21,7 @@ const router = Router();
  *       500:
  *         description: Erreur serveur.
  */
-router.get('/customers', verifyTokenMiddleware, getAllCustomers);
-
+router.get('/customers', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.getAllCustomers);
 /**
  * @swagger
  * /api/customers:
@@ -49,9 +40,9 @@ router.get('/customers', verifyTokenMiddleware, getAllCustomers);
  *               name:
  *                 type: string
  *                 example: "Aiden Sarfez"
- *               address:
+ *               adress:
  *                 type: string
- *                 example: "1 rue de Paris, 75000 Paris, France"
+ *                 example: "1 rue de Paris"
  *               email:
  *                 type: string
  *                 example: "aiden.sarfez@email.com"
@@ -66,8 +57,7 @@ router.get('/customers', verifyTokenMiddleware, getAllCustomers);
  *       500:
  *         description: Erreur interne.
  */
-router.post('/customers', verifyTokenMiddleware, createCustomer);
-
+router.post('/customers', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.createCustomer);
 /**
  * @swagger
  * /api/customers/{id}:
@@ -82,8 +72,7 @@ router.post('/customers', verifyTokenMiddleware, createCustomer);
  *         required: true
  *         schema:
  *           type: string
- *           example: "60f7a4f97b6c3a4bd0d0f0c8"
- *         description: ID du customer (MongoDB ObjectId)
+ *         description: ID du customer
  *     requestBody:
  *       required: true
  *       content:
@@ -94,15 +83,15 @@ router.post('/customers', verifyTokenMiddleware, createCustomer);
  *               name:
  *                 type: string
  *                 example: "Jean Dupont"
- *               address:
+ *               adress:
  *                 type: string
- *                 example: "5 avenue des Champs-Élysées, 75008 Paris, France"
+ *                 example: "1 rue de Paris"
  *               email:
  *                 type: string
  *                 example: "jean.dupont@email.com"
  *               phone:
  *                 type: string
- *                 example: "+33698765432"
+ *                 example: "+33612345678"
  *     responses:
  *       200:
  *         description: Customer modifié avec succès.
@@ -113,8 +102,7 @@ router.post('/customers', verifyTokenMiddleware, createCustomer);
  *       500:
  *         description: Erreur interne.
  */
-router.put('/customers/:id', verifyTokenMiddleware, updateCustomer);
-
+router.put('/customers/:id', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.updateCustomer);
 /**
  * @swagger
  * /api/customers/active:
@@ -131,8 +119,7 @@ router.put('/customers/:id', verifyTokenMiddleware, updateCustomer);
  *       500:
  *         description: Erreur serveur.
  */
-router.get('/customers/active', verifyTokenMiddleware, getActiveCustomer);
-
+router.get('/customers/active', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.getActiveCustomer);
 /**
  * @swagger
  * /api/customers/active/{id}:
@@ -149,7 +136,6 @@ router.get('/customers/active', verifyTokenMiddleware, getActiveCustomer);
  *         required: true
  *         schema:
  *           type: string
- *           example: "60f7a4f97b6c3a4bd0d0f0c8"
  *         description: ID du customer
  *     requestBody:
  *       required: true
@@ -171,8 +157,7 @@ router.get('/customers/active', verifyTokenMiddleware, getActiveCustomer);
  *       500:
  *         description: Erreur serveur.
  */
-router.put('/customers/active/:id', verifyTokenMiddleware, isAdminMiddleware, updateCustomerActivity);
-
+router.put('/customers/active/:id', verifyTokenMiddleware_1.verifyTokenMiddleware, isAdminMiddleware_1.isAdminMiddleware, customerControllers_1.updateCustomerActivity);
 /**
  * @swagger
  * /api/customers/{id}/order:
@@ -189,7 +174,6 @@ router.put('/customers/active/:id', verifyTokenMiddleware, isAdminMiddleware, up
  *         required: true
  *         schema:
  *           type: string
- *           example: "60f7a4f97b6c3a4bd0d0f0c8"
  *         description: ID du customer
  *     requestBody:
  *       required: true
@@ -199,18 +183,8 @@ router.put('/customers/active/:id', verifyTokenMiddleware, isAdminMiddleware, up
  *             type: object
  *             properties:
  *               order:
- *                 type: object
- *                 properties:
- *                   orderId:
- *                     type: string
- *                     example: "order_abc123"
- *                   totalAmount:
- *                     type: number
- *                     example: 299.99
- *                   date:
- *                     type: string
- *                     format: date-time
- *                     example: "2024-02-20T14:48:00.000Z"
+ *                 type: string
+ *                 example: "order1234"
  *     responses:
  *       200:
  *         description: Commande ajoutée avec succès dans l'historique.
@@ -221,8 +195,7 @@ router.put('/customers/active/:id', verifyTokenMiddleware, isAdminMiddleware, up
  *       500:
  *         description: Erreur serveur.
  */
-router.put('/customers/:id/order', verifyTokenMiddleware, addOrderInHistory);
-
+router.put('/customers/:id/order', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.addOrderInHistory);
 /**
  * @swagger
  * /api/customers/{id}/order/{idOrder}:
@@ -239,14 +212,12 @@ router.put('/customers/:id/order', verifyTokenMiddleware, addOrderInHistory);
  *         required: true
  *         schema:
  *           type: string
- *           example: "60f7a4f97b6c3a4bd0d0f0c8"
  *         description: ID du customer
  *       - in: path
  *         name: idOrder
  *         required: true
  *         schema:
  *           type: string
- *           example: "order_abc123"
  *         description: ID de la commande
  *     responses:
  *       200:
@@ -258,6 +229,5 @@ router.put('/customers/:id/order', verifyTokenMiddleware, addOrderInHistory);
  *       500:
  *         description: Erreur serveur.
  */
-router.put('/customers/:id/order/:idOrder', verifyTokenMiddleware, delOrderInHistory);
-
-export default router;
+router.put('/customers/:id/order/:idOrder', verifyTokenMiddleware_1.verifyTokenMiddleware, customerControllers_1.delOrderInHistory);
+exports.default = router;
