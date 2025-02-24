@@ -14,7 +14,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development #Nous travaillons dans un environnement de DEV
-    command: npm run start
+    command: npm run dev
     #Commande à lancer après l'installation du
     #container pour lancer l'app automatiquement
 

@@ -16,9 +16,9 @@ import ProductSchema, { IProduct } from "../DBSchemas/ProductSchema";
      const { name, description, price, stock } = await req.body;
 
     const nameRegex = /^[a-zA-Z0-9\s\-_]+$/;
-        const descriptionRegex = /^.{10,}$/;
-        const priceRegex = /^(?!0(?:\.0+)?$)\d+(\.\d+)?$/;
-        const stockRegex = /^[1-9]\d*$/;
+    const descriptionRegex = /^.{10,}$/;
+    const priceRegex = /^(?!0(?:\.0+)?$)\d+(\.\d+)?$/;
+    const stockRegex = /^[1-9]\d*$/;
     if (
       !name || !nameRegex.test(name) ||
       !description || !descriptionRegex.test(description) ||
