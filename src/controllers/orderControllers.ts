@@ -50,12 +50,10 @@ export async function createOrder(req: Request, res: Response) {
             
             totalPrice += unitPriceList[i] * quantityList[i];
 
-            
             product.stock -= quantityList[i];
             productsToUpdate.push(product);
         }
 
-        
         const newOrder: IOrder = new OrderSchema({
             customer,
             productList,
@@ -101,6 +99,10 @@ export const cancelOrder = async (req: Request, res: Response): Promise<void> =>
     }
     if (order.status === 'cancelled') {
         res.status(400).json({ message: 'La commande est déjà annulée' });
+        return;
+      }
+      if (order.status === 'delivered') {
+        res.status(400).json({ message: 'La commande ne peut être annulée' });
         return;
       }
       const customer = await CustomerSchema.findById(order.customerId).exec();
